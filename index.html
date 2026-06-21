@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аварійний сканер рецептур PRO (Розширена база)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { 
+            --bg-color: #f8fafc; 
+            --card-bg: #ffffff; 
+            --text-main: #1e293b; 
+        }
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            font-family: 'Inter', system-ui, sans-serif; 
+            padding-bottom: 3rem; 
+        }
+        .card { 
+            background-color: var(--card-bg); 
+            border: 1px solid #e2e8f0; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+        }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .table-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .table-container::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        select optgroup { font-weight: 700; color: #0f172a; background-color: #f8fafc; }
+        select option { font-weight: 400; color: #334155; background-color: #ffffff; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <header class="text-center mb-6 pt-4">
+            <img src="https://foodline-production.com/wp-content/uploads/2021/10/3752781497_3752781497.webp" alt="Food Line Production Logo" class="w-32 h-auto mx-auto mb-4 rounded-xl shadow-sm bg-white p-2 border border-slate-200" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/><text x=\'50\' y=\'50\' font-family=\'Arial\' font-size=\'14\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23999\'>Logo</text></svg>'">
+            
+            <div class="flex items-center justify-center gap-2 mb-2">
+                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">R&D ЛАБОРАТОРІЯ</span>
+            </div>
+            
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Сканер сумісності сировини PRO</h1>
+            <p class="text-slate-500 mt-2 text-sm md:text-base max-w-3xl mx-auto">Глибинний аналіз хімічних, фізичних та мікробіологічних конфліктів на основі розширеної номенклатури підприємства.</p>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Controls Sidebar -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="card rounded-2xl p-6 border-t-4 border-t-emerald-500">
+                    <h2 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-3">Компонент А (Інгредієнт)</h2>
+                    <select id="compA" class="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none cursor-pointer bg-white text-sm shadow-sm">
+                        <option value="" disabled selected>Оберіть сировину з бази...</option>
+                        
+                        <optgroup label="Барвники та Пігменти">
+                            <option value="azo">Азобарвники (Кармуазин, Тартразин, Е110, Індигокармін)</option>
+                            <option value="antho">Антоціани (Сік чорної моркви, Екстракти)</option>
+                            <option value="annatto">Аннатто, Куркумін, Бета-каротин</option>
+                            <option value="tio2">Титану двоокис (E171)</option>
+                            <option value="caramel">Карамельний колір (Ecoramel E150)</option>
+                        </optgroup>
+                        
+                        <optgroup label="Загущувачі (Гідроколоїди)">
+                            <option value="alginate">Альгінат натрію / Пектин LM-14</option>
+                            <option value="starch_mod">Модифіковані крохмалі (Thermflo, Clearam, Colflo 67, HPC)</option>
+                            <option value="gums">Камеді традиційні (Гуарова, Ксантанова)</option>
+                            <option value="gellan">Камідь геланова (KELCOGEL)</option>
+                            <option value="cmc">Карбоксиметилцелюлоза (КМЦ)</option>
+                        </optgroup>
+                        
+                        <optgroup label="Білки та Емульгатори">
+                            <option value="protein_dairy">Сироватка, Молоко сухе, Сирні порошки (Пармезан, Чеддер)</option>
+                            <option value="yolk">Жовток сухий ферментований</option>
+                            <option value="soy">Соєві порошки та соуси</option>
+                        </optgroup>
+                        
+                        <optgroup label="Овочеві та Фруктові Бази">
+                            <option value="tomato_paste">Томатна паста (25%, 28%, 36%, 38%)</option>
+                            <option value="puree_acidic">Пюре кислі (Слива/Ткемалі, Яблуко, Журавлина)</option>
+                            <option value="puree_enzyme">Пюре активні (Часник, Імбир свіжі)</option>
+                        </optgroup>
+
+                        <optgroup label="Смак, Аромат, Спеції">
+                            <option value="spices">Сухі прянощі (Перець, Базилік, Коріандр, Паприка)</option>
+                            <option value="oils">Олії рідкі (Кунжутна, Соняшникова)</option>
+                            <option value="aromas">Ароматизатори та Екстракти (Дим, Сир, Фрукти)</option>
+                            <option value="umami">Підсилювачі смаку (Риботайд, Глутамат)</option>
+                        </optgroup>
+                        
+                        <optgroup label="Підсолоджувачі">
+                            <option value="sugars_bulk">Цукор, Фруктоза, Патока (глюкозна/тростинна), Меляса</option>
+                            <option value="stevia_intense">Інтенсивні підсолоджувачі (Стевія RA40/50, Сукралоза, Ерітритол)</option>
+                        </optgroup>
+
+                        <optgroup label="Консерванти та Антиоксиданти">
+                            <option value="benzoate">Бензоат натрію / Сорбат калію</option>
+                            <option value="nisin">Біоконсерванти (Нізин Е234, Натаміцин)</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="card rounded-2xl p-6 border-t-4 border-t-slate-500">
+                    <h2 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-3">Компонент Б (Середовище / Фактор)</h2>
+                    <select id="compB" class="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none cursor-pointer bg-white text-sm shadow-sm">
+                        <option value="" disabled selected>Оберіть фактор впливу...</option>
+                        
+                        <optgroup label="Хімічне середовище">
+                            <option value="reducer">Антиоксиданти/Відновники (Ізоаскорбінат, Аскорбінова к-та)</option>
+                            <option value="acid">Кисле середовище (Оцтова/Лимонна/Молочна, pH < 3.8)</option>
+                            <option value="microbio">Нейтральне/Слабкокисле середовище (pH > 4.5)</option>
+                            <option value="calcium">Наявність іонів Кальцію (Кальцій цитрат, Молочна база)</option>
+                            <option value="buffer">Буфери лужні (Натрій цитрат)</option>
+                            <option value="salt_high">Висока концентрація солей (NaCl)</option>
+                        </optgroup>
+                        
+                        <optgroup label="Фізичні фактори">
+                            <option value="heat">Тривале інтенсивне нагрівання (>80°C)</option>
+                            <option value="open_heat">Відкрите кип'ятіння (випаровування)</option>
+                            <option value="shear">Високий зсув (Гомогенізатор, потужна фреза)</option>
+                            <option value="oxygen">Кисень (аерація) + Іони металів від обладнання</option>
+                            <option value="high_brix">Високий Brix (>30% сухих речовин/цукрів)</option>
+                        </optgroup>
+
+                        <optgroup label="Біологічні фактори">
+                            <option value="enzymes_active">Присутність сирих ферментів (з непастеризованих овочів)</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Result Panel -->
+            <div class="lg:col-span-8">
+                <div class="card rounded-2xl p-6 h-full flex flex-col bg-white">
+                    <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        Експертний висновок
+                    </h2>
+                    
+                    <div id="defaultState" class="flex-1 flex flex-col items-center justify-center text-slate-400 py-12 bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                        <svg class="w-12 h-12 mb-3 opacity-30 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                        <p class="text-sm text-slate-500 font-medium text-center px-4">Оберіть Інгредієнт та Фактор впливу у меню ліворуч, щоб перевірити їх взаємодію.</p>
+                    </div>
+
+                    <div id="resultCard" class="hidden flex-1 flex flex-col gap-4">
+                        <div id="statusBanner" class="p-4 rounded-xl font-bold text-base flex items-center gap-3 border shadow-sm transition-all duration-300"></div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-50/50 p-5 rounded-xl border border-slate-200">
+                                <h3 class="font-bold text-slate-700 mb-2 text-xs uppercase tracking-wider flex items-center gap-2">
+                                    <span class="w-5 h-5 rounded bg-slate-200 flex items-center justify-center text-[10px]">1</span> Механізм процесу
+                                </h3>
+                                <p id="mechText" class="text-sm text-slate-600 leading-relaxed"></p>
+                            </div>
+                            <div class="bg-red-50/30 p-5 rounded-xl border border-red-100">
+                                <h3 class="font-bold text-red-800 mb-2 text-xs uppercase tracking-wider flex items-center gap-2">
+                                    <span class="w-5 h-5 rounded bg-red-100 flex items-center justify-center text-[10px]">2</span> Наслідок для продукту
+                                </h3>
+                                <p id="symptomText" class="text-sm text-red-700/80 leading-relaxed font-medium"></p>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto bg-emerald-50 border border-emerald-200 p-5 rounded-xl">
+                            <h3 class="font-bold text-emerald-800 mb-2 text-xs uppercase tracking-wider flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                Рішення технолога
+                            </h3>
+                            <p id="solutionText" class="text-emerald-700 text-sm leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Comprehensive Table -->
+        <section class="card rounded-2xl p-0 mt-8 overflow-hidden">
+            <div class="p-6 border-b border-slate-100 bg-white">
+                <h2 class="text-2xl font-bold text-slate-800">Енциклопедія конфліктів сировини</h2>
+                <p class="text-slate-500 text-sm mt-1">Вичерпна база даних найпоширеніших критичних помилок при розробці соусів.</p>
+            </div>
+            
+            <div class="table-container overflow-x-auto bg-white">
+                <table class="min-w-full text-sm text-left border-collapse">
+                    <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                        <tr>
+                            <th class="p-4 whitespace-nowrap w-1/5">Компонент 1</th>
+                            <th class="p-4 whitespace-nowrap w-1/5">Компонент 2 / Фактор</th>
+                            <th class="p-4 w-1/5">Механізм</th>
+                            <th class="p-4 w-1/5">Брак продукту</th>
+                            <th class="p-4 w-1/5">Рішення</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <!-- Базові рядки -->
+                        <tr class="hover:bg-slate-50/80">
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-red-100 text-red-700 mb-1 inline-block">Барвники</span><br>Азобарвники (Е122, Е110)</td>
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-amber-100 text-amber-700 mb-1 inline-block">Хімія</span><br>Відновники (Ізоаскорбінат)</td>
+                            <td class="p-4 text-slate-600 text-xs">Відновлення азозв'язку під дією температури.</td>
+                            <td class="p-4 text-red-600 text-xs font-medium">Знебарвлення соусу в гарячому баці.</td>
+                            <td class="p-4 text-emerald-700 text-xs">Знизити дозу. Вносити розчин за 5 хв до розливу.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80">
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-red-100 text-red-700 mb-1 inline-block">Барвники</span><br>Антоціани (Сік чор. моркви)</td>
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-sky-100 text-sky-700 mb-1 inline-block">pH</span><br>Буфери (Натрій цитрат)</td>
+                            <td class="p-4 text-slate-600 text-xs">Зміна молекулярної структури при зростанні pH > 4.0.</td>
+                            <td class="p-4 text-red-600 text-xs font-medium">Колір стає синім, брудно-фіолетовим або сірим.</td>
+                            <td class="p-4 text-emerald-700 text-xs">Контролювати pH < 3.8. Не використовувати лужні буфери.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80">
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-stone-200 text-stone-700 mb-1 inline-block">Структура</span><br>Альгінат натрію / Геланова</td>
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-sky-100 text-sky-700 mb-1 inline-block">Мінерали</span><br>Іони Кальцію (Сироватка)</td>
+                            <td class="p-4 text-slate-600 text-xs">Миттєве утворення поперечних кальцієвих містків (гель).</td>
+                            <td class="p-4 text-red-600 text-xs font-medium">Утворення нерозчинних гумових грудок ("жаб").</td>
+                            <td class="p-4 text-emerald-700 text-xs">Розчинити камеді повністю ДО внесення кальцієвих баз.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80">
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-orange-100 text-orange-700 mb-1 inline-block">Білки</span><br>Сирні порошки, Томатна паста</td>
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-amber-100 text-amber-700 mb-1 inline-block">Тепло + pH</span><br>Кислота + Нагрівання</td>
+                            <td class="p-4 text-slate-600 text-xs">Денатурація та коагуляція білків в ізоелектричній точці.</td>
+                            <td class="p-4 text-red-600 text-xs font-medium">Розшарування (синерезис), виділення сирних крупинок.</td>
+                            <td class="p-4 text-emerald-700 text-xs">Заварити крохмаль для захисту. Кислоту вносити в кінці охолодженою.</td>
+                        </tr>
+                        <!-- Нові специфічні рядки -->
+                        <tr class="hover:bg-slate-50/80">
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-stone-200 text-stone-700 mb-1 inline-block">Структура</span><br>Модифіковані крохмалі</td>
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-purple-100 text-purple-700 mb-1 inline-block">Механіка</span><br>Високий зсув (Гомогенізатор)</td>
+                            <td class="p-4 text-slate-600 text-xs">Фізичне розрізання (руйнування) набряклих крохмальних зерен фрезою.</td>
+                            <td class="p-4 text-red-600 text-xs font-medium">Різка втрата в'язкості після охолодження, розрідження.</td>
+                            <td class="p-4 text-emerald-700 text-xs">Гомогенізувати емульсію ДО заварювання крохмалю, або використовувати стійкі до зсуву крохмалі.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80">
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-teal-100 text-teal-700 mb-1 inline-block">Цукри</span><br>Інтенсивні підсолоджувачі (Ерітритол)</td>
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-pink-100 text-pink-700 mb-1 inline-block">Фізика</span><br>Високий Brix + Охолодження</td>
+                            <td class="p-4 text-slate-600 text-xs">Зниження розчинності при падінні температури (рекристалізація).</td>
+                            <td class="p-4 text-orange-600 text-xs font-medium">Відчуття холодного піску або кристалів на зубах у готовому соусі.</td>
+                            <td class="p-4 text-emerald-700 text-xs">Контролювати межу розчинності. Замінювати частину ерітритолу на сукралозу.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80">
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-rose-100 text-rose-700 mb-1 inline-block">Овочі</span><br>Пюре активні (Часник, Імбир)</td>
+                            <td class="p-4 font-semibold text-slate-800"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-blue-100 text-blue-700 mb-1 inline-block">Мікробіо</span><br>Нейтральне середовище</td>
+                            <td class="p-4 text-slate-600 text-xs">Величезне бактеріальне навантаження з сирих коренеплодів.</td>
+                            <td class="p-4 text-red-600 text-xs font-medium">Миттєве бродіння та бомбаж, якщо pH не знизити нижче 4.2.</td>
+                            <td class="p-4 text-emerald-700 text-xs">Обов'язкова пастеризація пюре. Підкислення соусу.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // ГЛИБИННА БАЗА КОНФЛІКТІВ (Оновлена для нового класифікатора)
+        const conflicts = {
+            
+            // --- БАРВНИКИ ---
+            "azo-reducer": {
+                status: "Критичний конфлікт (Втрата кольору)",
+                level: "danger",
+                mech: "Відновник (ізоаскорбінат) розриває азозв'язок (-N=N-) у молекулі синтетичного барвника. Температура виступає каталізатором.",
+                symptom: "Соус повністю знебарвлюється або стає блідо-жовтим прямо у варильному баці.",
+                solution: "Знизити дозу ізоаскорбінату до 0.3-0.5 кг/т. Вносити у вигляді розчину за 5 хв до початку фасування."
+            },
+            "antho-buffer": {
+                status: "Конфлікт (Зміна кольору)",
+                level: "warning",
+                mech: "Антоціан (напр., сік чорної моркви) змінює молекулярну структуру залежно від pH. Лужні буфери зсувають pH > 4.0.",
+                symptom: "Замість насиченого червоного кольору соус стає брудно-фіолетовим або синювато-сірим.",
+                solution: "Строго контролювати pH < 3.8. Уникати використання лужних солей (цитратів)."
+            },
+            "antho-reducer": {
+                status: "Ризик знебарвлення (Повільний)",
+                level: "warning",
+                mech: "Аскорбінова кислота / ізоаскорбінат поступово розщеплює молекулу антоціану в процесі зберігання (особливо на світлі).",
+                symptom: "Соус поступово втрачає яскравість у скляній тарі на полиці супермаркету.",
+                solution: "Мінімізувати дозу вітаміну С. Рекомендується використання світлонепроникної тари."
+            },
+            "annatto-acid": {
+                status: "Ризик осаду (Вицвітання)",
+                level: "warning",
+                mech: "Класичний екстракт аннатто не розчинний у сильно кислому середовищі.",
+                symptom: "Колір блідне, у соусі з'являються дрібні кольорові крапки (пігмент агломерував і випав в осад).",
+                solution: "Для кислих соусів (майонези, ткемалі) використовувати спеціальні кислотостійкі форми аннатто або бета-каротин."
+            },
+            "tio2-acid": {
+                status: "Агломерація пігменту",
+                level: "warning",
+                mech: "У кислому або сильно солоному середовищі частинки діоксиду титану втрачають електростатичний заряд і злипаються.",
+                symptom: "Поява білих крупинок або 'крейдяного' осаду. Соус втрачає рівномірну 'молочну' непрозорість.",
+                solution: "Попередньо диспергувати діоксид титану в густому сиропі або гліцерині ДО внесення в кисле середовище баку."
+            },
+            "tio2-salt_high": {
+                 status: "Агломерація (Висолювання)",
+                 level: "warning",
+                 mech: "Висока концентрація іонів солі нейтралізує заряд навколо частинок діоксиду титану, провокуючи їх злипання.",
+                 symptom: "Утворення білих пластівців або крапок діоксиду титану в соусі.",
+                 solution: "Диспергувати пігмент із захисним колоїдом (наприклад, розчином камеді) до додавання солі."
+            },
+            "caramel-acid": {
+                status: "Ідеальна стабільність",
+                level: "safe",
+                mech: "Барвники цукровий колер (особливо клас E150c та E150d) надзвичайно стійкі до кислого середовища та нагрівання.",
+                symptom: "Стійкий, рівномірний коричневий колір.",
+                solution: "Продовжуйте використання. Жодних специфічних ризиків не виявлено."
+            },
+
+            // --- СТРУКТУРА ТА ГІДРОКОЛОЇДИ ---
+            "alginate-calcium": {
+                status: "Критичний брак (Миттєва коагуляція)",
+                level: "danger",
+                mech: "Іони кальцію утворюють міцні поперечні містки між полімерними ланцюгами альгінату (структура 'яєчного лотка').",
+                symptom: "Утворення нерозчинних жорстких гумових грудок ('жаб'). Соус зіпсовано.",
+                solution: "Повністю гідратувати альгінат у чистій воді ДО внесення сироватки чи сиру. Можливе використання комплексоутворювачів (EDTA)."
+            },
+            "gellan-calcium": {
+                status: "Миттєве гелеутворення",
+                level: "danger",
+                mech: "Геланова камідь вимагає катіонів (особливо кальцію) для формування каркасу. При їх надлишку гель утворюється миттєво і стає крихким.",
+                symptom: "Рідина перетворюється на щільне желе ще під час перемішування. Руйнування текстури при перекачуванні.",
+                solution: "Контролювати рівень мінералів. Вносити геланову камідь обережно, збалансовано з іонами."
+            },
+            "starch_mod-acid": {
+                status: "Втрата в'язкості (Гідроліз)",
+                level: "warning",
+                mech: "Кислотний гідроліз: іони водню розрізають довгі ланцюги крохмалю на короткі декстрини при тривалому кип'ятінні.",
+                symptom: "У пляшці соус стає рідким, як вода (втрата стабільності).",
+                solution: "Використовувати сильно 'зшиті' крохмалі (Thermflo, Clearam CH 30). Кислоту (оцет) додавати в самісінькому кінці варіння."
+            },
+            "starch_mod-high_brix": {
+                status: "Технологічна помилка (Недозаварювання)",
+                level: "warning",
+                mech: "Висока концентрація цукрів міцно зв'язує вільну воду, не даючи крохмальному зерну розбухнути і клейстеризуватися.",
+                symptom: "Соус не набирає очікувану густину, крохмаль відчувається 'піском' на язиці.",
+                solution: "Заварювати крохмаль у водній фазі ПЕРЕД внесенням основної маси цукру, патоки чи меляси."
+            },
+            "starch_mod-shear": {
+                status: "Механічне руйнування",
+                level: "danger",
+                mech: "Високе зсувне зусилля (від гомогенізатора або колоїдного млина) фізично розриває вже набряклі зерна крохмалю.",
+                symptom: "Різке падіння в'язкості соусу відразу після гомогенізації.",
+                solution: "Гомогенізувати олійно-водну емульсію ДО додавання і заварювання крохмалю. Або використовувати спеціальні shear-стійкі крохмалі."
+            },
+            "gums-calcium": {
+                 status: "Стабільна сумісність",
+                 level: "safe",
+                 mech: "Класичні камеді (гуарова, ксантанова) не утворюють гелів з іонами кальцію і є стійкими до молочних баз.",
+                 symptom: "Нормальне і прогнозоване загущення продукту.",
+                 solution: "Дотримуйтесь стандартних дозувань."
+            },
+
+            // --- БІЛКИ ТА ЕМУЛЬГАТОРИ ---
+            "protein_dairy-acid": {
+                status: "Високий ризик (Синерезис)",
+                level: "danger",
+                mech: "Зниження pH до ізоелектричної точки білків (казеїну). Білки втрачають заряд, злипаються, а нагрівання міцно фіксує цей стан.",
+                symptom: "Соус 'згортається', відбувається розшарування (відокремлюється прозора вода), з'являються сирні пластівці.",
+                solution: "Заварити крохмаль/камеді (щоб створити захисну сітку). Оцет або лимонну кислоту вводити наприкінці охолодженими під сильну мішалку."
+            },
+            "yolk-shear": {
+                status: "Руйнування емульсії",
+                level: "danger",
+                mech: "Надмірне механічне зусилля (занадто високі обороти або час гомогенізації) руйнує ліпопротеїнові оболонки жовтка.",
+                symptom: "Соус 'відмаслився' - виділився шар вільної олії на поверхні.",
+                solution: "Оптимізувати час і швидкість гомогенізації. Обов'язково застосовувати гідроколоїдні стабілізатори (ксантан)."
+            },
+            "tomato_paste-calcium": {
+                status: "Ризик згортання (Томат + Молоко)",
+                level: "warning",
+                mech: "Природна кислотність томатної пасти (pH ~4.0-4.3) достатня для денатурації молочних білків при їх поєднанні та нагріванні.",
+                symptom: "Поява 'пластівців' та крупинок у томатно-вершкових або сирних соусах.",
+                solution: "Буферизувати томатну пасту (наприклад, щіпкою соди) перед поєднанням з молочною базою, або захистити білки крохмалем."
+            },
+
+            // --- КОНСЕРВАНТИ ТА МІКРОБІОЛОГІЯ ---
+            "benzoate-microbio": {
+                status: "Ризик псування (Неефективність консерванту)",
+                level: "danger",
+                mech: "Бензоат натрію та сорбат калію працюють тільки в недисоційованій формі, яка існує лише в кислому середовищі (pH < 4.5). У нейтральному середовищі вони розпадаються на іони і втрачають силу.",
+                symptom: "Бродіння, здуття або пліснявіння некислого (сирного/вершкового) соусу на полиці.",
+                solution: "Для некислих соусів застосовувати Нізин (Е234), стерилізацію в автоклаві, або штучно знижувати pH рецептури."
+            },
+            "puree_enzyme-microbio": {
+                status: "Критичний мікробіологічний ризик",
+                level: "danger",
+                mech: "Свіжі пюре коренеплодів (часник, імбир) мають величезне природне бактеріальне забруднення (вкл. спори) та власні ферменти. У некислому середовищі вони миттєво проростають.",
+                symptom: "Миттєвий бомбаж (здуття) пляшок, активне бродіння і скисання продукту.",
+                solution: "Обов'язкова жорстка пастеризація таких пюре. Підкислення загального соусу (pH < 4.2)."
+            },
+            "spices-microbio": {
+                status: "Мікробіологічний ризик",
+                level: "danger",
+                mech: "Натуральні сухі трави і спеції містять термостійкі спори (наприклад, Bacillus), які виживають при варінні 100°C і проростають при високому pH.",
+                symptom: "Масовий бомбаж (здуття) або псування партій соусу під час зберігання.",
+                solution: "Використовувати стерилізовані спеції, олеорезини (екстракти) або додавати біоконсервант Нізин."
+            },
+            "nisin-acid": {
+                status: "Ідеальна сумісність (Біозахист)",
+                level: "safe",
+                mech: "Нізин (Е234) надзвичайно стабільний у кислому середовищі і витримує високі температури пастеризації.",
+                symptom: "Продукт надійно захищений від грампозитивних бактерій та їх спор.",
+                solution: "Дотримуйтесь технологічного дозування. Це найкраще рішення для термостабільних соусів."
+            },
+            
+            // --- СМАК, АРОМАТ ТА ОЛІЇ ---
+            "oils-oxygen": {
+                status: "Ризик (Згірклість / Окислення ліпідів)",
+                level: "warning",
+                mech: "Кисень (при активному перемішуванні) + Іони металів (від обладнання) викликають ланцюгове окислення поліненасичених жирних кислот у рослинних оліях.",
+                symptom: "Поява гіркого, неприємного ('оліфового' або 'картонного') запаху та присмаку через місяць зберігання.",
+                solution: "Вакуумувати бак. Використовувати Натрій EDTA (Е385) для зв'язування металів, або Ізоаскорбінат як антиоксидант."
+            },
+            "aromas-open_heat": {
+                status: "Втрата ароматики (Випаровування)",
+                level: "warning",
+                mech: "Випаровування легких, високолетючих ефірних фракцій ароматизатора разом з водяною парою у відкритому котлі.",
+                symptom: "Готовий соус втрачає до 80% закладеного профілю аромату (пахне 'пусто').",
+                solution: "Вносити рідкі ароматизатори строго на етапі охолодження або через закритий інлайн-дозатор перед фасуванням."
+            },
+            "umami-enzymes_active": {
+                status: "Втрата ефекту 'Умамі' (Деградація)",
+                level: "danger",
+                mech: "Ферменти (фосфатази), що містяться у свіжих пюре часнику/імбиру, біологічно розщеплюють нуклеотиди Риботайду на неактивні компоненти.",
+                symptom: "Соус втрачає насиченість, 'м'ясність' і глибину смаку. Використання дорогого Риботайду стає марним.",
+                solution: "Термічно обробити (бланшувати/пастеризувати) свіжі пюре для повної інактивації ферментів ДО внесення Риботайду."
+            },
+
+            // --- ПІДСОЛОДЖУВАЧІ ---
+            "stevia_intense-high_brix": {
+                 status: "Ризик рекристалізації (Ерітритол)",
+                 level: "warning",
+                 mech: "Ерітритол має низьку межу розчинності у воді (порівняно з цукром). При охолодженні густих сиропів він випадає в осад.",
+                 symptom: "Відчуття холодного 'піску' або кристалів на зубах під час дегустації готового охолодженого соусу.",
+                 solution: "Не перевищувати межу розчинності ерітритолу. Замінювати частину насолоди сукралозою або стевією."
+            },
+            "stevia_intense-acid": {
+                 status: "Ідеальна стабільність",
+                 level: "safe",
+                 mech: "Сукралоза та екстракти стевії (RA40/50) надзвичайно стійкі до низького pH та високих температур.",
+                 symptom: "Стабільний і чистий солодкий профіль протягом усього терміну придатності.",
+                 solution: "Продовжуйте використання. Підходять для розробки соусів 'Без цукру'."
+            }
+        };
+
+        const defaultStateObj = {
+            status: "Стандартний технологічний процес",
+            level: "info",
+            mech: "Критичних хімічних, фізичних чи біологічних конфліктів між обраними групами (за наявною базою) не виявлено.",
+            symptom: "Компонент має поводити себе стабільно та виконувати свою базову функцію згідно специфікації.",
+            solution: "Дотримуйтесь температурних режимів та стандартних дозувань виробника. Рекомендується провести контрольний мікро-варочний тест (R&D)."
+        };
+
+        // UI Elements Mapping
+        const selA = document.getElementById('compA');
+        const selB = document.getElementById('compB');
+        const defaultView = document.getElementById('defaultState');
+        const resultCard = document.getElementById('resultCard');
+        
+        const statusBanner = document.getElementById('statusBanner');
+        const mechText = document.getElementById('mechText');
+        const symptomText = document.getElementById('symptomText');
+        const solutionText = document.getElementById('solutionText');
+
+        // Styles mapping (Tailwind classes)
+        const styles = {
+            danger: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', icon: '<svg class="w-6 h-6 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>' },
+            warning: { bg: 'bg-amber-50', text: 'text-amber-800', border: 'border-amber-200', icon: '<svg class="w-6 h-6 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' },
+            safe: { bg: 'bg-emerald-50', text: 'text-emerald-800', border: 'border-emerald-200', icon: '<svg class="w-6 h-6 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' },
+            info: { bg: 'bg-slate-50', text: 'text-slate-700', border: 'border-slate-300', icon: '<svg class="w-6 h-6 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' }
+        };
+
+        const updateResult = () => {
+            const valA = selA.value;
+            const valB = selB.value;
+
+            if (!valA || !valB) return;
+
+            // Перевіряємо обидва напрямки (А-Б та Б-А)
+            const key1 = `${valA}-${valB}`;
+            const key2 = `${valB}-${valA}`;
+
+            const data = conflicts[key1] || conflicts[key2] || defaultStateObj;
+            const styling = styles[data.level];
+
+            // Render DOM
+            defaultView.classList.add('hidden');
+            resultCard.classList.remove('hidden');
+
+            statusBanner.className = `p-4 rounded-xl font-bold text-base flex items-center gap-3 border shadow-sm ${styling.bg} ${styling.text} ${styling.border}`;
+            statusBanner.innerHTML = `${styling.icon} <span>${data.status}</span>`;
+
+            mechText.textContent = data.mech;
+            symptomText.textContent = data.symptom;
+            solutionText.textContent = data.solution;
+        };
+
+        selA.addEventListener('change', updateResult);
+        selB.addEventListener('change', updateResult);
+    </script>
+</body>
+</html>
